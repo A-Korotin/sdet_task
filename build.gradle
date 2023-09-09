@@ -23,9 +23,18 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    implementation 'org.seleniumhq.selenium:selenium-manager:4.11.0'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.11.0'
+
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+
+
 }
 
 tasks.named('test') {
