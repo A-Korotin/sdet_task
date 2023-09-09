@@ -5,7 +5,7 @@ services:
     container_name: hub
     image: selenium/hub
     ports:
-      - '4442-4444:4442-4444'
+      - '4444:4444'
   chrome:
     image: selenium/node-chrome
     depends_on:
