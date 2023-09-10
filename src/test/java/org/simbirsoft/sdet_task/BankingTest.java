@@ -57,6 +57,7 @@ public class BankingTest {
     }
 
     @Test
+    @DisplayName("Login as 'Harry Potter'")
     @Order(1)
     public void login() {
         bankingPage.openLoginPage()
@@ -64,6 +65,7 @@ public class BankingTest {
     }
 
     @Test
+    @DisplayName("Check initial balance")
     @Order(2)
     public void checkInitialBalance() {
         long balance = bankingPage.checkBalance();
@@ -71,6 +73,7 @@ public class BankingTest {
     }
 
     @Test
+    @DisplayName("Deposit and withdraw the same amount, then check if balance is zero")
     @Order(3)
     public void deposit_ThenWithdraw_ThenCheckBalance() {
         int currentDayOfMonth = LocalDate.now().getDayOfMonth();
@@ -85,6 +88,7 @@ public class BankingTest {
     }
 
     @Test
+    @DisplayName("Check that credit and debit transactions are present")
     @Order(4)
     public void checkTransactions() {
         List<Transaction> transactions = bankingPage.openTransactionsPage().retrieveTransactions();

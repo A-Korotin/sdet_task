@@ -17,18 +17,16 @@ public class ExporterServiceImpl implements ExportService {
 
     @Override
     public void export(List<Transaction> transactions) {
-        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("/resources/export.csv"))) {
+        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("./export/transaction_export.csv"))) {
             for (Transaction t: transactions) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(t.getDateTime()
-                        .format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH)))
-                        .append(',')
-                        .append(t.getAmount())
-                        .append(',')
-                        .append(t.getType().name().substring(0, 1).toUpperCase())
-                        .append(t.getType().name().substring(1))
-                        .append('\n');
-                outputStream.write(builder.toString().getBytes());
+                String builder = t.getDateTime()
+                        .format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH)) +
+                        ',' +
+                        t.getAmount() +
+                        ',' +
+                        t.getType().name() +
+                        '\n';
+                outputStream.write(builder.getBytes());
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package org.simbirsoft.sdet_task;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ public class FibonacciTests {
     private FibonacciService fibonacciService;
 
     @ParameterizedTest
+    @DisplayName("Fibonacci test")
     @ArgumentsSource(FibonacciArgumentSource.class)
     public void test(int n, int expected) {
         long fib = fibonacciService.calculateFibonacci(n);
