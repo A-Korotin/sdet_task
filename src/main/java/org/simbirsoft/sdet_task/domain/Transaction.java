@@ -23,10 +23,14 @@ public class Transaction {
 
     public static Transaction ofWebElement(WebElement webElement) {
         List<WebElement> columns = webElement.findElements(By.xpath("*")); // all child elements
+
         LocalDateTime dateTime = LocalDateTime.parse(columns.get(0).getText(),
                 DateTimeFormatter.ofPattern("MMM d, yyyy h:mm:ss a", Locale.ENGLISH));
+
         long amount = Long.parseLong(columns.get(1).getText());
+
         TransactionType type = TransactionType.valueOf(columns.get(2).getText().toUpperCase());
+
         return Transaction.builder()
                 .dateTime(dateTime)
                 .amount(amount)

@@ -19,7 +19,6 @@ public class BankingPage {
 
 
     public BankingPage openLoginPage() {
-        // Откройте страницу https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login
         driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
         driver.executeScript("window.localStorage.clear();");
         return this;
