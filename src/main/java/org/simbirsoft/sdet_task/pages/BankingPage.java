@@ -3,15 +3,13 @@ package org.simbirsoft.sdet_task.pages;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.simbirsoft.sdet_task.domain.Transaction;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -46,7 +44,8 @@ public class BankingPage {
     @SneakyThrows
     public BankingPage withdraw(long amount) {
         getElement(By.xpath("//button[@ng-class=\"btnClass3\"]")).click();
-        getElement(By.xpath("//label[text()=\"Amount to be Withdrawn :\" ]")); // wait until page reloads
+        // wait until the withdrawal page appears
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()=\"Amount to be Withdrawn :\"]")));
         getElement(By.xpath("//input[@placeholder=\"amount\" ]")).sendKeys(String.valueOf(amount));
         getElement(By.xpath("//button[@type=\"submit\" and text()=\"Withdraw\"]")).click();
         return this;
@@ -57,28 +56,19 @@ public class BankingPage {
     }
 
     public BankingPage openTransactionsPage() {
-        getElement(By.xpath("/html/body/div/div/div[2]/div/div[3]/button[1]")).click();
+        getElement(By.xpath("//button[@ng-class=\"btnClass1\"]")).click();
         return this;
     }
 
-    public BankingPage clearAndReturn() {
-        try {
-            getElement(By.xpath("/html/body/div/div/div[2]/div/div[1]/button[2]")).click();
-        } catch (ElementNotInteractableException ignored) {} // transaction list is empty
-        getElement(By.xpath("/html/body/div/div/div[2]/div/div[1]/button[1]")).click();
-        return this;
-    }
+    public List<Transaction> retrieveTransactions() {
+        // wait until the transaction table loads
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table/tbody")));
 
-    public BankingPage checkTransactions() {
-        // Проверьте наличие транзакций
-        // ...
-        return this;
-    }
-
-    public BankingPage exportTransactionsToCSV() {
-        // Сформируйте и экспортируйте файл CSV
-        // ...
-        return this;
+        return wait.until(ExpectedConditions
+                        .presenceOfAllElementsLocatedBy((By.xpath("//tr[@class=\"ng-scope\"]"))))
+                .stream()
+                .map(Transaction::ofWebElement)
+                .toList();
     }
 }
 
